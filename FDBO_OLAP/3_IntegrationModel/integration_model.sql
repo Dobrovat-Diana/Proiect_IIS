@@ -100,6 +100,43 @@ ORDER BY rank_comanda
 FETCH FIRST 10 ROWS ONLY;
 
 
+--Crearea unei vederi analitice de tip CUBE pentru agregarea vânzărilor pe metoda de plată și țara de livrare
+
+CREATE OR REPLACE VIEW v_sales_cube AS
+SELECT
+    DECODE(GROUPING(payment_method), 1, 'ALL_METHODS', payment_method)   AS payment_method,
+    DECODE(GROUPING(shipping_country), 1, 'ALL_COUNTRIES', shipping_country) AS shipping_country,
+    GROUPING_ID(payment_method, shipping_country) AS grouping_level,
+    SUM(revenue) AS total_revenue,
+    COUNT(DISTINCT order_id) AS nr_orders
+FROM fact_sales
+GROUP BY CUBE(payment_method, shipping_country);
+ 
+ 
+--Validarea rezultatelor generate de vederea v_sales_cube
+
+SELECT * 
+FROM v_sales_cube
+ORDER BY grouping_level, payment_method, shipping_country;
+
+
+--Crearea unei vederi analitice de tip ROLLUP pentru agregarea ierarhică a vânzărilor în timp
+
+CREATE OR REPLACE VIEW v_sales_rollup_time AS
+SELECT
+    EXTRACT(YEAR FROM order_date)  AS an,
+    EXTRACT(MONTH FROM order_date) AS luna,
+    SUM(revenue)                   AS total_vanzari,
+    COUNT(DISTINCT order_id)       AS nr_comenzi
+FROM fact_sales
+GROUP BY ROLLUP(EXTRACT(YEAR FROM order_date), EXTRACT(MONTH FROM order_date));
+
+
+--Verificarea rezultatelor generate de vederea v_sales_rollup_time
+
+SELECT *
+FROM v_sales_rollup_time
+ORDER BY an, luna;
 
 
 
