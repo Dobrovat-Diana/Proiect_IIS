@@ -1,0 +1,14 @@
+org\datasource\jdbc\views\orders\OrderView.class
+org\datasource\jdbc\JDBCDataSourceConnector.class
+org\datasource\jdbc\views\customers\CustomerViewBuilder.class
+org\datasource\jdbc\views\customerdetails\CustomerDetailsViewBuilder.class
+org\datasource\security\BasicConfiguration.class
+org\datasource\jdbc\views\customerdetails\CustomerDetailsView.class
+org\datasource\jdbc\views\orderitems\OrderItemView.class
+org\datasource\RESTViewServiceJDBC.class
+org\datasource\jdbc\views\customers\CustomerView.class
+org\datasource\jdbc\views\orderitems\OrderItemViewBuilder.class
+org\datasource\jdbc\views\customersadresses\CustomerAddressesView.class
+org\datasource\SpringBootSQLJDBCService.class
+org\datasource\jdbc\views\customersadresses\CustomerAddressesViewBuilder.class
+org\datasource\jdbc\views\orders\OrderViewBuilder.class
